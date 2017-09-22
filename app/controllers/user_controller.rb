@@ -1,4 +1,7 @@
 class UserController < ApplicationController
+  
+  skip_before_filter :require_login, :only => [:login_form, :login, :new, :create]
+  
   def login_form
     
   end

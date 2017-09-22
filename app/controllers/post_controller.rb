@@ -1,4 +1,7 @@
 class PostController < ApplicationController
+  
+  skip_before_filter :require_login, :only => [:list]
+  
   ### CREATE START
   def create
     _author = params[:author]
@@ -13,6 +16,7 @@ class PostController < ApplicationController
   end
 
   def new
+    
   end
   ### CREATE END
   
@@ -54,5 +58,4 @@ class PostController < ApplicationController
     redirect_to controller: 'post', action:'list'
     
   end
-  
 end
