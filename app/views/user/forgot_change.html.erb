@@ -1,0 +1,11 @@
+<h1>비밀번호 변경</h1>
+<form action="/user/forgot_confirm" method="post">
+<%= hidden_field_tag(request_forgery_protection_token.to_s, form_authenticity_token) %>
+<input type="hidden" name="code" value="<%=@code%>">
+    <p>
+        <label for="password">새로운 비밀번호</label>
+        <input name="password" type="password">
+    </p>
+
+    <button type="submit">확인</button>
+</form>

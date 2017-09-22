@@ -5,9 +5,20 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+<style>
+  .alert-error{
+    color:red;
+  }
+  .alert-warning{
+    color:orange;
+  }
+  
+</style>
 </head>
 <body>
-
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>"><%= value %></div>
+  <% end %>
 <%= yield %>
 
 </body>

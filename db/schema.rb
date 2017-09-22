@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170922060345) do
+ActiveRecord::Schema.define(version: 20170922094822) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "contents"
@@ -35,10 +35,23 @@ ActiveRecord::Schema.define(version: 20170922060345) do
     t.string   "password"
     t.string   "name"
     t.string   "gender"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "email"
+    t.boolean  "is_verified", default: false, null: false
   end
 
   add_index "users", ["account"], name: "index_users_on_account", unique: true
+
+  create_table "verifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.boolean  "is_verified"
+    t.boolean  "is_active"
+    t.string   "code"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "verifications", ["user_id"], name: "index_verifications_on_user_id"
 
 end

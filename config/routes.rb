@@ -8,6 +8,16 @@ Rails.application.routes.draw do
   get 'user/new'
 
   post 'user/create'
+  
+  get 'user/verify'
+  
+  get 'user/forgot_form'
+  
+  get 'user/forgot_change'
+  
+  post 'user/forgot'
+  
+  post 'user/forgot_confirm'
 
   get 'comment/new'
 
