@@ -1,6 +1,7 @@
 class PostController < ApplicationController
   
-  skip_before_filter :require_login, :only => [:list]
+  # skip_before_filter :require_login, :only => [:list]
+  before_action :authenticate_user!, except: [ :list ]
   
   ### CREATE START
   def create
@@ -9,7 +10,7 @@ class PostController < ApplicationController
     _contents = params[:context]
     
     post = Post.new(author: _author, title: _title, context: _contents)
-  
+    post.user = current_user
     post.save
     
     redirect_to controller: 'post', action:'list'
@@ -22,13 +23,16 @@ class PostController < ApplicationController
   
   ### READ
   def list
-    @posts = Post.joins(:comments).all
+    @posts = Post.all
   end
   
   ### UPDATE
   def modify
     _id = params[:id]
     @post = Post.find(_id)
+
+    authorize_action_for @post
+
   end
   
   def update
@@ -38,6 +42,7 @@ class PostController < ApplicationController
     _contents = params[:context]
     
     post = Post.find(_id)
+    authorize_action_for post
   
     post.author = _author
     post.title = _title
@@ -52,8 +57,10 @@ class PostController < ApplicationController
   def delete
     _id = params[:id]
     
-    post = Post.find(_id)
-    post.destroy
+    @post = Post.find(_id)
+    authorize_action_for @post
+        
+    @post.destroy
     
     redirect_to controller: 'post', action:'list'
     

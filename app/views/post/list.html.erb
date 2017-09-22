@@ -1,38 +1,38 @@
 <h3>방명록 리스트</h3>
-<a href="/post/new" style="float:right; display:inline-block;">
+<a href="/post/new" style="float:right;display:inline-block;">
     <button>새 글</button>
 </a>
-<% if session[:logined] %>
-    <span>환영합니다. <%=session[:user]['name']%>님 </span>
-    <a href="/user/logout">
-        <button>로그아웃</button>
-    </a>
-<% else %>
-<a href="/user/new">
-    <button>회원가입</button>
-</a>
-<a href="/user/login_form">
-    <button>로그인</button>
-</a>
-<% end %>
+
+	<% if user_signed_in? %>
+	  <p>현재 로그인된 유저의 이메일 : <%= current_user.email %></p>
+	  <p><%= link_to "로그아웃", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure?" } %></p>
+	<% else %>
+	  <p><%= link_to "로그인", new_user_session_path %></p>
+	<% end %>
+	
 <ul>
     <% @posts.each do |post| %>
     <li>
         <h4><%=post.id%>, <%=post.title%></h4>
-        <a href="/post/modify?id=<%=post.id%>">수정</a>
-        <a href="/post/delete?id=<%=post.id%>">삭제</a>
-        <a href="/comment/new?id=<%=post.id%>">댓글</a>
+        
+    		<% if user_signed_in? %>
+    		  <%= link_to '수정', post_modify_path(:id => post.id) if post.updatable_by? current_user %>&nbsp;
+    		  <%= link_to '삭제', post_delete_path(:id => post.id), data: { confirm: 'Are you sure?' } if post.deletable_by? current_user %>
+    		<% end %>
+            <!--<a href="/post/modify?id=<%=post.id%>">수정</a>-->
+            <!--<a href="/post/delete?id=<%=post.id%>">삭제</a>-->
+            <a href="/comment/new?id=<%=post.id%>">댓글</a>
         <hr>
         <%=post.context%>
         <hr>
-        <%=post.author%>, <%=post.created_at.in_time_zone(9).to_formatted_s(:short)%>
- 
-         <hr>
-         <ol>
-         <% post.comments.each do |comment| %>
-             <li><%=comment.contents%></li>
-         <% end %>
-         </ol>     
+        <%=post.author%>, <%=post.created_at.in_time_zone(9).to_formatted_s(:short)  %>
+        
+        <hr>
+        <ol>
+        <% post.comments.each do |comment| %>
+            <li><%=comment.contents%>, <a href="/comment/delete?id=<%=comment.id%>">X</a></li>
+        <% end %>
+        </ol>
     </li>
     <% end %>
 </ul>
