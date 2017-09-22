@@ -1,2 +1,14 @@
-<h1>User#login_form</h1>
-<p>Find me in app/views/user/login_form.html.erb</p>
+<h1>로그인</h1>
+<form action="/user/login" method="post">
+<%= hidden_field_tag(request_forgery_protection_token.to_s, form_authenticity_token) %>
+
+    <p>
+        <label for="account">계정</label>
+        <input name="account" type="text">
+    </p>
+    <p>
+        <label for="password">비밀번호</label>
+        <input name="password" type="password">
+    </p>    
+    <button type="submit">로그인</button>
+</form>

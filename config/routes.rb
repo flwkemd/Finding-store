@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'user/login_form'
 
-  get 'user/login'
+  post 'user/login'
 
   get 'user/logout'
 

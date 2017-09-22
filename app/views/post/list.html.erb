@@ -2,9 +2,19 @@
 <a href="/post/new" style="float:right; display:inline-block;">
     <button>새 글</button>
 </a>
+<% if session[:logined] %>
+    <span>환영합니다. <%=session[:user]['name']%>님 </span>
+    <a href="/user/logout">
+        <button>로그아웃</button>
+    </a>
+<% else %>
 <a href="/user/new">
     <button>회원가입</button>
 </a>
+<a href="/user/login_form">
+    <button>로그인</button>
+</a>
+<% end %>
 <ul>
     <% @posts.each do |post| %>
     <li>

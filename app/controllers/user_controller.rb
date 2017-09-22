@@ -4,9 +4,27 @@ class UserController < ApplicationController
   end
 
   def login
+    _account = params[:account]
+    _password = params[:password]
+    
+    user = User.find_by(account: _account)
+    
+    if user.password == Digest::SHA256.hexdigest(_password)
+      ## success
+      session[:logined] = true
+      session[:user] = user
+      redirect_to controller: 'post', action: 'list'
+    else
+      ## failure
+      redirect_to :back
+    
+    end
   end
 
   def logout
+    reset_session
+    
+    redirect_to controller: 'post', action: 'list'
   end
 
   def new
