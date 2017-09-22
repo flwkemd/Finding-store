@@ -1,0 +1,25 @@
+<h3>방명록 리스트</h3>
+<a href="/post/new" style="float:right; display:inline-block;">
+    <button>새 글</button>
+</a>
+<ul>
+    <% @posts.each do |post| %>
+    <li>
+        <h4><%=post.id%>, <%=post.title%></h4>
+        <a href="/post/modify?id=<%=post.id%>">수정</a>
+        <a href="/post/delete?id=<%=post.id%>">삭제</a>
+        <a href="/comment/new?id=<%=post.id%>">댓글</a>
+        <hr>
+        <%=post.context%>
+        <hr>
+        <%=post.author%>, <%=post.created_at.in_time_zone(9).to_formatted_s(:short)%>
+ 
+         <hr>
+         <ol>
+         <% post.comments.each do |comment| %>
+             <li><%=comment.contents%></li>
+         <% end %>
+         </ol>     
+    </li>
+    <% end %>
+</ul>
