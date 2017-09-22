@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'user/login_form'
+
+  get 'user/login'
+
+  get 'user/logout'
+
+  get 'user/new'
+
+  post 'user/create'
+
   get 'comment/new'
 
   get 'comment/create'

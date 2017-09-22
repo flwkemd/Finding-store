@@ -1,0 +1,17 @@
+<h1>회원가입</h1>
+<form action ="/user/create" method="post">
+    <%= hidden_field_tag(request_forgery_protection_token.to_s, form_authenticity_token) %>
+    <p>
+        <label for="account">아이디</label>
+        <input type="text" name="account">
+    </p>
+    <p>
+        <label for="password">비밀번호</label>    
+        <input type="password" name="password">
+    </p>
+    <p>
+        <label for="name">이름</label>
+        <input type="text" name="name">
+    </p>
+    <button type="submit">가입</button>
+</form>
